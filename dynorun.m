@@ -7,7 +7,7 @@ Ts = 1;
 sim('dyno');
 
 power = speed.*torque;
-bsfc = -energy./power;
-[c,h]=contour(speed,torque,bsfc);
-%[c,h]=contour(speed,power,1./bsfc);
+bsfc = energy./power;
+%[c,h]=contour(speed,torque,bsfc);
+[c,h]=contour(speed,power,1./bsfc);
 clabel(c,h);
