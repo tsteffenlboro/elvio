@@ -3,11 +3,13 @@ s = [100:50:600];
 r = [30:1:160];
 
 Ts = 1;
-[speed,request]=meshgrid(s,r);
+[speed,torque]=meshgrid(s,r);
 sim('dyno');
 
 power = speed.*torque;
-bsfc = energy./power;
-%[c,h]=contour(speed,torque,bsfc);
-[c,h]=contour(speed,power,1./bsfc);
+efficiency = power./energy;
+[c,h]=contour(speed,torque,efficiency);
+%[c,h]=contour(speed,power,1./bsfc);
 clabel(c,h);
+xlabel('Speed in rad/s'); 
+ylabel('Torque in Nm');
