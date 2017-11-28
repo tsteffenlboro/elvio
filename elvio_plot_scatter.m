@@ -1,4 +1,11 @@
 function []=elvio_plot_scatter(l)
+% elvio_plot_scatter(l)
+%
+% Draw a scatter plot and cumulative histograms for logged connections.
+% The plot is drawn as power over speed. 
+% 
+%   l - logsout structure from Simulink
+%
     close all
     for i=1:l.numElements
         if regexp(l{i}.Name,'^E_'), continue, end  
@@ -11,7 +18,7 @@ function []=elvio_plot_scatter(l)
         if length(size(f))>2
             f=squeeze(f)';
             v=squeeze(v)';
-        end;
+        end
         p = f.*v;
         figure;
         subplot(2,2,2);
@@ -25,6 +32,10 @@ function []=elvio_plot_scatter(l)
         title('Cumulative Histogram');
         elvio_plot_cumsum(3,f,'Force/Torque');
         elvio_plot_cumsum(4,p,'Power in W');
+        leg = ['1':'9' 'a':'z' 'A':'Z']';
+        leg = mat2cell(leg(1:size(v,2),1),size(v,2),1);
+        leg = legend(leg,'Location','southeast');
+        title(leg,'Case');
     end
 end
 

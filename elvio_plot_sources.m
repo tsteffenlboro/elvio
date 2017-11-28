@@ -1,6 +1,11 @@
 function []=elvio_plot_sources(l)
+% elvio_plot_sources(l)
+%
 % Plot the energy used from primary energy sources 
 % over the parameter cases. 
+%
+%   l - logsout structure from Simulink
+%
     res = [];
     leg = {};
     for i=1:l.numElements
@@ -15,5 +20,5 @@ function []=elvio_plot_sources(l)
     xlabel('Case number');
     ylabel('Energy in J');
     title('Primary Energy Source Sensitivity');
-    legend(leg);
+    legend(leg,'Location','best');
 end
