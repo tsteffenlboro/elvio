@@ -16,12 +16,13 @@ function []=elvio_plot_sources_xy(l)
         block = regexp(l{i}.BlockPath.getBlock(1),'/(?<name>\w+)/','names');
         leg = [leg {block.name}];
     end
-    plot(res(:,1),res(:,2),'x-');
+    plot(res(:,2),res(:,1),'x-');
     for i=1:size(res,1)
-        text(res(i,1),res(i,2),int2str(i));
+        text(res(i,2),res(i,1),int2str(i));
     end
-    xlabel(leg{1});
-    ylabel(leg{2});
+    xlabel(leg{2});
+    ylabel(leg{1});
     title('Primary Energy Source Trade-Off in J');
     axis equal
+    grid
 end
