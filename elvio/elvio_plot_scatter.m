@@ -12,9 +12,9 @@ function []=elvio_plot_scatter(l)
         b = l{i}.BlockPath.getBlock(1);
         if length(regexp(b,'/'))>1, continue, end  
         V = l{i}.Values;
-        if ~isfield(V,'Freq'), continue, end
-        f = V.Freq.Data;
-        v = (V.vcur.Data+V.v_.Data)./2;
+        if ~isfield(V,'F'), continue, end
+        f = V.F.Data;
+        v = (V.v.Data+V.v_.Data)./2;
         if length(size(f))>2
             f=squeeze(f)';
             v=squeeze(v)';
@@ -23,7 +23,7 @@ function []=elvio_plot_scatter(l)
         figure;
         subplot(2,2,2);
         plot(v,p,'x');
-        %plot([V.vcur.Data V.v_.Data]',[V.Freq.Data V.Freq.Data]','-xk');
+        %plot([V.v.Data V.v_.Data]',[V.F.Data V.F.Data]','-xk');
         xlabel('Speed');
         ylabel('Power in W');
         title(regexprep(b,'_',' '));
