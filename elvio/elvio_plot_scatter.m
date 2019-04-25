@@ -8,25 +8,31 @@ function []=elvio_plot_scatter(l)
 %
     close all
     for i=1:l.numElements
-        if regexp(l{i}.Name,'^E_'), continue, end  
+        n = l{i}.Name;
+        if regexp(n,'^E_'), continue, end  
         b = l{i}.BlockPath.getBlock(1);
         if length(regexp(b,'/'))>1, continue, end  
         V = l{i}.Values;
         if ~isfield(V,'F'), continue, end
         f = V.F.Data;
-        v = (V.v.Data+V.v_.Data)./2;
+        v1 = V.v.Data;
+        v2 = V.v_.Data;
         if length(size(f))>2
             f=squeeze(f)';
-            v=squeeze(v)';
+            v1=squeeze(v1)';
+            v2=squeeze(v2)';
         end
+        f = [f;f];
+        v = [v1;v2];
         p = f.*v;
         figure;
         subplot(2,2,2);
         plot(v,p,'x');
+        grid;
         %plot([V.v.Data V.v_.Data]',[V.F.Data V.F.Data]','-xk');
         xlabel('Speed');
         ylabel('Power in W');
-        title(regexprep(b,'_',' '));
+        title(['Scatter: ' n]);
         
         elvio_plot_cumsum(1,v,'Speed');
         title('Cumulative Histogram');
@@ -45,7 +51,8 @@ function []=elvio_plot_cumsum(s,x,l)
         x(:,i)=sort(x(:,i));
     end
     ns=0.75:0.5:size(x,1)+0.5;
-    plot(ceil(ns),x(round(ns),:));
-    xlabel('Time in s');
+    plot(ceil(ns)*0.5,x(round(ns),:));
+    xlabel('Cummulative Duration in s');
     ylabel(l);
+    grid;
 end
